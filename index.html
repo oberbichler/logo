@@ -38,6 +38,45 @@
             stroke-linecap: round;
             stroke-linejoin: round;
         }
+
+        .fill {
+            opacity: 0;
+            fill: black;
+        }
+        
+        .fade-in {
+            opacity: 1;
+            animation-name: fadeInOpacity;
+            animation-iteration-count: 1;
+            animation-timing-function: ease-in;
+            animation-duration: 2s;
+        }
+        
+        @keyframes fadeInOpacity {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+        
+        .fade-out {
+            opacity: 0;
+            animation-name: fadeOutOpacity;
+            animation-iteration-count: 1;
+            animation-timing-function: ease-in;
+            animation-duration: 2s;
+        }
+
+        @keyframes fadeOutOpacity {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 <body>
@@ -125,6 +164,11 @@
             <path d="M550,350c0-55.2-44.8-100-100-100s-100,44.8-100,100v150c0,55.2,44.8,100,100,100s100-44.8,100-100C550,500,550,350,550,350z"/>
             <path d="M500,350c0-27.6-22.4-50-50-50s-50,22.4-50,50c0,0,0,150,0,150c0,27.6,22.4,50,50,50s50-22.4,50-50C500,500,500,350,500,350z"/>
         </g>
+        <g id="fill" class="fill">
+            <path d="M250,550c-27.6,0-50-22.4-50-50V300h50c13.8,0,25-11.2,25-25s-11.2-25-25-25c0,0-50,0-50,0V125c0-13.8-11.2-25-25-25s-25,11.2-25,25c0,0,0,375,0,375c0,55.2,44.8,100,100,100c13.8,0,25-11.2,25-25S263.8,550,250,550z"/>
+            <path d="M450,250c-55.2,0-100,44.8-100,100v150c0,55.2,44.8,100,100,100s100-44.8,100-100V350C550,294.8,505.2,250,450,250z
+			         M500,500c0,27.6-22.4,50-50,50s-50-22.4-50-50V350c0-27.6,22.4-50,50-50s50,22.4,50,50V500z"/>
+        </g>
     </svg>
     <script>
         const linesAnimation = new Vivus('grid-lines', {
@@ -145,7 +189,16 @@
 
         linesAnimation.play(function() {
             circlesAnimation.play(function() {
-                contoursAnimation.play();
+                contoursAnimation.play(function() {
+                    document.getElementById("fill")
+                            .classList.add("fade-in");
+
+                    document.getElementById("grid-lines")
+                            .classList.add("fade-out");
+
+                    document.getElementById("grid-circles")
+                            .classList.add("fade-out");
+                });
             });
         });
     </script>
